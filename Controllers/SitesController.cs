@@ -26,7 +26,7 @@ namespace Annuaire_Bloc_4_API.Controllers
 
 		// GET api/sites/{id}
 		[HttpGet("{id}")]
-		public ActionResult<IEnumerable<Site>> GetSiteById(long id)
+		public ActionResult<IEnumerable<Site>> GetSiteById(int id)
 		{
 			var site = _repository.GetSiteById(id);
 			return Ok(site);

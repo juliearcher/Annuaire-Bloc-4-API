@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 namespace Annuaire_Bloc_4_API.Models
 {
-    public partial class Site
+    public partial class Service
     {
-        public Site()
+        public Service()
         {
             Employees = new HashSet<Employee>();
         }
 
         public long Id { get; set; }
-        public string City { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<Employee> Employees { get; set; }
     }

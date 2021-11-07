@@ -8,10 +8,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+
 
 namespace Annuaire_Bloc_4_API
 {
@@ -27,10 +31,11 @@ namespace Annuaire_Bloc_4_API
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddDbContext<ApiContext>(opt => opt.UseMySql(Configuration.GetConnectionString("Annuaire"), ServerVersion.AutoDetect(Configuration.GetConnectionString("Annuaire"))));
 
 			services.AddControllers();
 
-			services.AddScoped<IApiRepo, MockApiRepo>();
+			services.AddScoped<IApiRepo, SqlApiRepo>();
 
 			services.AddSwaggerGen(c =>
 			{

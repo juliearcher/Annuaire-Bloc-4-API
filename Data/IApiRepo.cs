@@ -6,6 +6,6 @@ namespace Annuaire_Bloc_4_API.Data
 	public interface IApiRepo
 	{
 		IEnumerable<Site> GetAllSites();
-		Site GetSiteById(long id);
+		Site GetSiteById(int id);
 	}
 }
