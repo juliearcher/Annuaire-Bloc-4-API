@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Newtonsoft.Json.Serialization;
 
 
 namespace Annuaire_Bloc_4_API
@@ -31,10 +32,19 @@ namespace Annuaire_Bloc_4_API
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			//Connect to database
 			services.AddDbContext<ApiContext>(opt => opt.UseMySql(Configuration.GetConnectionString("Annuaire"), ServerVersion.AutoDetect(Configuration.GetConnectionString("Annuaire"))));
 
-			services.AddControllers();
+			//Add controllers
+			services.AddControllers().AddNewtonsoftJson(s =>
+			{
+				s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+			});
 
+			//Add Mapper (Dto)
+			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+			//Add repository instance
 			services.AddScoped<IApiRepo, SqlApiRepo>();
 
 			services.AddSwaggerGen(c =>

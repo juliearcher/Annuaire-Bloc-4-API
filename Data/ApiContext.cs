@@ -12,6 +12,10 @@ namespace Annuaire_Bloc_4_API.Data
 		}
 
 		public DbSet<Site> Sites { get; set; }
-       
-    }
+
+		public DbSet<Service> Services { get; set; }
+
+		public DbSet<Employee> Employees { get; set; }
+
+	}
 }

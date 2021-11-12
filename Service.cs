@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
-namespace Annuaire_Bloc_4_API.Models
+namespace Annuaire_Bloc_4_API
 {
     public partial class Service
     {
@@ -13,10 +12,7 @@ namespace Annuaire_Bloc_4_API.Models
             Employees = new HashSet<Employee>();
         }
 
-        [Key]
         public long Id { get; set; }
-
-        [Required]
         public string Name { get; set; }
 
         public virtual ICollection<Employee> Employees { get; set; }

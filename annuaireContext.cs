@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace Annuaire_Bloc_4_API.Models
+namespace Annuaire_Bloc_4_API
 {
     public partial class annuaireContext : DbContext
     {
@@ -53,36 +53,25 @@ namespace Annuaire_Bloc_4_API.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnType("bigint(11)")
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.Mail)
                     .IsRequired()
                     .HasMaxLength(50)
-                    .HasColumnName("mail")
-                    .UseCollation("utf8_unicode_ci")
-                    .HasCharSet("utf8");
+                    .HasColumnName("mail");
 
                 entity.Property(e => e.Mobile)
-                    .IsRequired()
                     .HasMaxLength(12)
-                    .HasColumnName("mobile")
-                    .UseCollation("utf8_unicode_ci")
-                    .HasCharSet("utf8");
+                    .HasColumnName("mobile");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
-                    .HasColumnName("name")
-                    .UseCollation("utf8_unicode_ci")
-                    .HasCharSet("utf8");
+                    .HasColumnName("name");
 
                 entity.Property(e => e.Phone)
-                    .IsRequired()
                     .HasMaxLength(12)
-                    .HasColumnName("phone")
-                    .UseCollation("utf8_unicode_ci")
-                    .HasCharSet("utf8");
+                    .HasColumnName("phone");
 
                 entity.Property(e => e.ServicesId)
                     .HasColumnType("bigint(11)")
@@ -95,9 +84,7 @@ namespace Annuaire_Bloc_4_API.Models
                 entity.Property(e => e.Surname)
                     .IsRequired()
                     .HasMaxLength(50)
-                    .HasColumnName("surname")
-                    .UseCollation("utf8_unicode_ci")
-                    .HasCharSet("utf8");
+                    .HasColumnName("surname");
 
                 entity.HasOne(d => d.Services)
                     .WithMany(p => p.Employees)
