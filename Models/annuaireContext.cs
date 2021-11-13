@@ -41,9 +41,9 @@ namespace Annuaire_Bloc_4_API.Models
 
                 entity.HasComment("A TERMINER - CLE ETRANGERE SERVICE SITE FAITES");
 
-                entity.HasIndex(e => e.ServicesId, "SERVICES_ID");
+                entity.HasIndex(e => e.ServicesId, "ServicesId");
 
-                entity.HasIndex(e => e.SitesId, "SITES_ID");
+                entity.HasIndex(e => e.SitesId, "SitesId");
 
                 entity.HasIndex(e => e.Mail, "unique mail")
                     .IsUnique();

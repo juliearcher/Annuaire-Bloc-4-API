@@ -22,5 +22,13 @@ namespace Annuaire_Bloc_4_API.Data
 		void UpdateService(Service service);
 		void DeleteService(Service service);
 		#endregion
+
+		#region Employees
+		IEnumerable<Employee> GetAllEmployees();
+		Employee GetEmployeeById(int id);
+		void CreateEmployee(Employee employee);
+		void UpdateEmployee(Employee employee);
+		void DeleteEmployee(Employee employee);
+		#endregion
 	}
 }

@@ -31,12 +31,10 @@ namespace Annuaire_Bloc_4_API.Controllers
 	
 		// GET api/sites/{id}
 		[HttpGet("{id}", Name = "GetSiteById")]
-		public ActionResult<Site> GetSiteById(int id)
+		public ActionResult<SiteReadDto> GetSiteById(int id)
 		{
 			var site = _repository.GetSiteById(id);
-			return site != null ? Ok(site) : NotFound(); ;
-			// Return all site
-			//return site != null? Ok(_mapper.Map<SiteReadDto>(site)) : NotFound();
+			return site != null? Ok(_mapper.Map<SiteReadDto>(site)) : NotFound();
 		}
 
 		//POST api/sites

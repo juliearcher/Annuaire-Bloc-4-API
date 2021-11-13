@@ -31,12 +31,10 @@ namespace Annuaire_Bloc_4_API.Controllers
 
 		// GET api/services/{id}
 		[HttpGet("{id}", Name = "GetServiceById")]
-		public ActionResult<Service> GetServiceById(int id)
+		public ActionResult<ServiceReadDto> GetServiceById(int id)
 		{
 			var services = _repository.GetServiceById(id);
-			return services != null ? Ok(services) : NotFound(); ;
-			// Return all services
-			//return services != null? Ok(_mapper.Map<ServicesReadDto>(services)) : NotFound();
+			return services != null? Ok(_mapper.Map<ServiceReadDto>(services)) : NotFound();
 		}
 
 		//POST api/services

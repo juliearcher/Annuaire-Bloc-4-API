@@ -84,10 +84,42 @@ namespace Annuaire_Bloc_4_API.Data
 
 		#endregion
 
+		#region Employees
+		public void CreateEmployee(Employee employee)
+		{
+			if (employee == null)
+				throw new ArgumentNullException(nameof(employee));
+			_context.Employees.Add(employee);
+		}
+
+		public void DeleteEmployee(Employee employee)
+		{
+			if (employee == null)
+				throw new ArgumentNullException(nameof(employee));
+			_context.Employees.Remove(employee);
+		}
+
+		public IEnumerable<Employee> GetAllEmployees()
+		{
+			return _context.Employees.ToList();
+		}
+
+		public Employee GetEmployeeById(int id)
+		{
+			return _context.Employees.FirstOrDefault(p => p.Id == id);
+		}
+
+		public void UpdateEmployee(Employee service)
+		{
+			// Nothing to do
+		}
+		#endregion
+
 		public bool SaveChanges()
 		{
 			return _context.SaveChanges() >= 0;
 		}
 
+		
 	}
 }
