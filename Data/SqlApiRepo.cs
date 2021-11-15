@@ -51,33 +51,33 @@ namespace Annuaire_Bloc_4_API.Data
 		}
 		#endregion
 
-		#region Services
+		#region Departments
 
-		public void CreateService(Service service)
+		public void CreateDepartment(Department department)
 		{
-			if (service == null)
-				throw new ArgumentNullException(nameof(service));
-			_context.Services.Add(service);
+			if (department == null)
+				throw new ArgumentNullException(nameof(department));
+			_context.Departments.Add(department);
 		}
 
-		public void DeleteService(Service service)
+		public void DeleteDepartment(Department department)
 		{
-			if (service == null)
-				throw new ArgumentNullException(nameof(service));
-			_context.Services.Remove(service);
+			if (department == null)
+				throw new ArgumentNullException(nameof(department));
+			_context.Departments.Remove(department);
 		}
 
-		public IEnumerable<Service> GetAllServices()
+		public IEnumerable<Department> GetAllDepartments()
 		{
-			return _context.Services.ToList();
+			return _context.Departments.ToList();
 		}
 
-		public Service GetServiceById(int id)
+		public Department GetDepartmentById(int id)
 		{
-			return _context.Services.FirstOrDefault(p => p.Id == id);
+			return _context.Departments.FirstOrDefault(p => p.Id == id);
 		}
 
-		public void UpdateService(Service service)
+		public void UpdateDepartment(Department department)
 		{
 			// Nothing to do
 		}
@@ -109,7 +109,7 @@ namespace Annuaire_Bloc_4_API.Data
 			return _context.Employees.FirstOrDefault(p => p.Id == id);
 		}
 
-		public void UpdateEmployee(Employee service)
+		public void UpdateEmployee(Employee department)
 		{
 			// Nothing to do
 		}

@@ -15,12 +15,12 @@ namespace Annuaire_Bloc_4_API.Data
 		void DeleteSite(Site site);
 		#endregion
 
-		#region Services
-		IEnumerable<Service> GetAllServices();
-		Service GetServiceById(int id);
-		void CreateService(Service service);
-		void UpdateService(Service service);
-		void DeleteService(Service service);
+		#region Departments
+		IEnumerable<Department> GetAllDepartments();
+		Department GetDepartmentById(int id);
+		void CreateDepartment(Department department);
+		void UpdateDepartment(Department department);
+		void DeleteDepartment(Department department);
 		#endregion
 
 		#region Employees

@@ -28,14 +28,14 @@ namespace Annuaire_Bloc_4_API.Controllers
 		{
 			var employeeList = _repository.GetAllEmployees();
 			var sitesList = _repository.GetAllSites();
-			var servicesList = _repository.GetAllServices();
+			var departmentsList = _repository.GetAllDepartments();
 			var employeeReadDtoList = _mapper.Map<IEnumerable<EmployeeReadDto>>(employeeList);
 			for (int i  = 0; i < employeeReadDtoList.Count() && i < employeeList.Count(); ++i)
 			{
-				var service = servicesList.Where(p => p.Id == employeeList.ElementAt(i).ServicesId).First();
+				var department = departmentsList.Where(p => p.Id == employeeList.ElementAt(i).DepartmentsId).First();
 				var site = sitesList.Where(p => p.Id == employeeList.ElementAt(i).SitesId).First();
 				employeeReadDtoList.ElementAt(i).Site = site.City;
-				employeeReadDtoList.ElementAt(i).Service = service.Name;
+				employeeReadDtoList.ElementAt(i).Department = department.Name;
 			}
 			return Ok(employeeReadDtoList);
 		}
@@ -47,11 +47,11 @@ namespace Annuaire_Bloc_4_API.Controllers
 			var employee = _repository.GetEmployeeById(id);
 			if (employee == null)
 				return NotFound();
-			var service = _repository.GetServiceById((int)employee.ServicesId);
+			var department = _repository.GetDepartmentById((int)employee.DepartmentsId);
 			var site = _repository.GetSiteById((int)employee.SitesId);
 			var employeeReadDto = _mapper.Map<EmployeeReadDto>(employee);
 			employeeReadDto.Site = site.City;
-			employeeReadDto.Service = service.Name;
+			employeeReadDto.Department = department.Name;
 			return Ok(employeeReadDto);
 		}
 

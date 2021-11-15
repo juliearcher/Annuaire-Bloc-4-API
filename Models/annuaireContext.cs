@@ -17,8 +17,8 @@ namespace Annuaire_Bloc_4_API.Models
         {
         }
 
+        public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<Site> Sites { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -35,86 +35,9 @@ namespace Annuaire_Bloc_4_API.Models
             modelBuilder.HasCharSet("utf8mb4")
                 .UseCollation("utf8mb4_unicode_ci");
 
-            modelBuilder.Entity<Employee>(entity =>
+            modelBuilder.Entity<Department>(entity =>
             {
-                entity.ToTable("employees");
-
-                entity.HasComment("A TERMINER - CLE ETRANGERE SERVICE SITE FAITES");
-
-                entity.HasIndex(e => e.ServicesId, "ServicesId");
-
-                entity.HasIndex(e => e.SitesId, "SitesId");
-
-                entity.HasIndex(e => e.Mail, "unique mail")
-                    .IsUnique();
-
-                entity.HasIndex(e => new { e.Name, e.Surname }, "unique name/surname pair")
-                    .IsUnique();
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("bigint(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Mail)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("mail")
-                    .UseCollation("utf8_unicode_ci")
-                    .HasCharSet("utf8");
-
-                entity.Property(e => e.Mobile)
-                    .IsRequired()
-                    .HasMaxLength(12)
-                    .HasColumnName("mobile")
-                    .UseCollation("utf8_unicode_ci")
-                    .HasCharSet("utf8");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("name")
-                    .UseCollation("utf8_unicode_ci")
-                    .HasCharSet("utf8");
-
-                entity.Property(e => e.Phone)
-                    .IsRequired()
-                    .HasMaxLength(12)
-                    .HasColumnName("phone")
-                    .UseCollation("utf8_unicode_ci")
-                    .HasCharSet("utf8");
-
-                entity.Property(e => e.ServicesId)
-                    .HasColumnType("bigint(11)")
-                    .HasColumnName("SERVICES_ID");
-
-                entity.Property(e => e.SitesId)
-                    .HasColumnType("bigint(11)")
-                    .HasColumnName("SITES_ID");
-
-                entity.Property(e => e.Surname)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("surname")
-                    .UseCollation("utf8_unicode_ci")
-                    .HasCharSet("utf8");
-
-                entity.HasOne(d => d.Services)
-                    .WithMany(p => p.Employees)
-                    .HasForeignKey(d => d.ServicesId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("employees_ibfk_1");
-
-                entity.HasOne(d => d.Sites)
-                    .WithMany(p => p.Employees)
-                    .HasForeignKey(d => d.SitesId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("employees_ibfk_2");
-            });
-
-            modelBuilder.Entity<Service>(entity =>
-            {
-                entity.ToTable("services");
+                entity.ToTable("departments");
 
                 entity.HasComment("A TERMINER");
 
@@ -129,6 +52,70 @@ namespace Annuaire_Bloc_4_API.Models
                     .IsRequired()
                     .HasMaxLength(25)
                     .HasColumnName("name");
+            });
+
+            modelBuilder.Entity<Employee>(entity =>
+            {
+                entity.ToTable("employees");
+
+                entity.HasComment("A TERMINER - CLE ETRANGERE SERVICE SITE FAITES");
+
+                entity.HasIndex(e => e.DepartmentsId, "SERVICES_ID");
+
+                entity.HasIndex(e => e.SitesId, "SITES_ID");
+
+                entity.HasIndex(e => e.Mail, "unique mail")
+                    .IsUnique();
+
+                entity.HasIndex(e => new { e.Name, e.Surname }, "unique name/surname pair")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("bigint(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.DepartmentsId)
+                    .HasColumnType("bigint(11)")
+                    .HasColumnName("departmentsId");
+
+                entity.Property(e => e.Mail)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("mail");
+
+                entity.Property(e => e.Mobile)
+                    .HasMaxLength(12)
+                    .HasColumnName("mobile");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Phone)
+                    .HasMaxLength(12)
+                    .HasColumnName("phone");
+
+                entity.Property(e => e.SitesId)
+                    .HasColumnType("bigint(11)")
+                    .HasColumnName("sitesId");
+
+                entity.Property(e => e.Surname)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("surname");
+
+                entity.HasOne(d => d.Departments)
+                    .WithMany(p => p.Employees)
+                    .HasForeignKey(d => d.DepartmentsId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("employees_ibfk_1");
+
+                entity.HasOne(d => d.Sites)
+                    .WithMany(p => p.Employees)
+                    .HasForeignKey(d => d.SitesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("employees_ibfk_2");
             });
 
             modelBuilder.Entity<Site>(entity =>

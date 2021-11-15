@@ -25,13 +25,13 @@ namespace Annuaire_Bloc_4_API.Models
         public string Mail { get; set; }
 
         [Required]
-        public long ServicesId { get; set; }
+        public long DepartmentsId { get; set; }
 
         [Required]
         public long SitesId { get; set; }
 
-        [ForeignKey("ServicesId")]
-        public virtual Service Services { get; set; }
+        [ForeignKey("DepartmentsId")]
+        public virtual Department Departments { get; set; }
 
         [ForeignKey("SitesId")]
         public virtual Site Sites { get; set; }

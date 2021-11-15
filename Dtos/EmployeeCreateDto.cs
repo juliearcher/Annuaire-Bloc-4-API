@@ -20,7 +20,7 @@ namespace Annuaire_Bloc_4_API.Dtos
         public string Mail { get; set; }
 
         [Required]
-        public long ServicesId { get; set; }
+        public long DepartmentsId { get; set; }
 
         [Required]
         public long SitesId { get; set; }

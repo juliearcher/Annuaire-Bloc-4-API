@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Annuaire_Bloc_4_API.Dtos
 {
-    public partial class ServiceReadDto
+    public partial class DepartmentReadDto
     {
         [Key]
         public long Id { get; set; }

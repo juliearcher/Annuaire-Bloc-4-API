@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Annuaire_Bloc_4_API.Dtos
 {
-    public partial class ServiceCreateDto
+    public partial class DepartmentCreateDto
     {
         [Required]
         [MaxLength(25)]

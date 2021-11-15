@@ -21,7 +21,7 @@ namespace Annuaire_Bloc_4_API.Dtos
 
         public string Mail { get; set; }
 
-        public string Service { get; set; }
+        public string Department { get; set; }
         public string Site { get; set; }
     }
 }
