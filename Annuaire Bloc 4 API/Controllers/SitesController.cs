@@ -1,12 +1,12 @@
-using Annuaire_Bloc_4_API.Data;
-using Annuaire_Bloc_4_API.Dtos;
-using Annuaire_Bloc_4_API.Models;
+using AnnuaireBloc4API.Data;
+using AnnuaireBloc4API.Dtos;
+using AnnuaireBloc4API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace Annuaire_Bloc_4_API.Controllers
+namespace AnnuaireBloc4API.Controllers
 {
 	[Route("api/sites")]
 	[ApiController]

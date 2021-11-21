@@ -1,8 +1,8 @@
-using Annuaire_Bloc_4_API.Dtos;
-using Annuaire_Bloc_4_API.Models;
+using AnnuaireBloc4API.Dtos;
+using AnnuaireBloc4API.Models;
 using AutoMapper;
 
-namespace Annuaire_Bloc_4_API.Profiles
+namespace AnnuaireBloc4API.Profiles
 {
 	public class EmployeesProfile : Profile
 	{

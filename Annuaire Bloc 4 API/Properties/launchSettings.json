@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Annuaire_Bloc_4_API": {
+    "AnnuaireBloc4API": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

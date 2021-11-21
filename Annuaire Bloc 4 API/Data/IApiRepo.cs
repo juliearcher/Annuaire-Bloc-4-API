@@ -1,7 +1,7 @@
-using Annuaire_Bloc_4_API.Models;
+using AnnuaireBloc4API.Models;
 using System.Collections.Generic;
 
-namespace Annuaire_Bloc_4_API.Data
+namespace AnnuaireBloc4API.Data
 {
 	public interface IApiRepo
 	{

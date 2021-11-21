@@ -1,4 +1,4 @@
-using Annuaire_Bloc_4_API.Data;
+using AnnuaireBloc4API.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -18,7 +18,7 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Newtonsoft.Json.Serialization;
 
 
-namespace Annuaire_Bloc_4_API
+namespace AnnuaireBloc4API
 {
 	public class Startup
 	{
@@ -49,7 +49,7 @@ namespace Annuaire_Bloc_4_API
 
 			services.AddSwaggerGen(c =>
 			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "Annuaire_Bloc_4_API", Version = "v1" });
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "AnnuaireBloc4API", Version = "v1" });
 			});
 		}
 
@@ -60,7 +60,7 @@ namespace Annuaire_Bloc_4_API
 			{
 				app.UseDeveloperExceptionPage();
 				app.UseSwagger();
-				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Annuaire_Bloc_4_API v1"));
+				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnnuaireBloc4API v1"));
 			}
 
 			app.UseHttpsRedirection();

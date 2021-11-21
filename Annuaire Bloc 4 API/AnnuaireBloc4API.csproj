@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Annuaire_Bloc_4_API</RootNamespace>
+    <RootNamespace>AnnuaireBloc4API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

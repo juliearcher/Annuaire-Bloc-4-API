@@ -1,8 +1,8 @@
-using Annuaire_Bloc_4_API.Models;
+using AnnuaireBloc4API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace Annuaire_Bloc_4_API.Data
+namespace AnnuaireBloc4API.Data
 {
 	public class ApiContext : DbContext
 	{

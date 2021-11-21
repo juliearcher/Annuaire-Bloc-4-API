@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace Annuaire_Bloc_4_API.Models
+namespace AnnuaireBloc4API.Models
 {
     public partial class annuaireContext : DbContext
     {
