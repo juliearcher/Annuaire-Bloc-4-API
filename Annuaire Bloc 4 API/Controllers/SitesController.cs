@@ -4,6 +4,7 @@ using AnnuaireBloc4API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace AnnuaireBloc4API.Controllers
@@ -44,7 +45,14 @@ namespace AnnuaireBloc4API.Controllers
 			// TODO check if infos are valid
 			var siteModel = _mapper.Map<Site>(siteCreateDto);
 			_repository.CreateSite(siteModel);
-			_repository.SaveChanges();
+			try
+			{
+				_repository.SaveChanges();
+			}
+			catch (DbUpdateException e)
+			{
+				return BadRequest(new DbError(e.Message, e.InnerException.Message));
+			}
 			var siteReadDto = _mapper.Map<SiteReadDto>(siteModel);
 
 			return CreatedAtRoute(nameof(GetSiteById), new { Id = siteReadDto.Id}, siteReadDto);
@@ -60,7 +68,14 @@ namespace AnnuaireBloc4API.Controllers
 				return NotFound();
 			_mapper.Map(siteUpdateDto, site);
 			_repository.UpdateSite(site);
-			_repository.SaveChanges();
+			try
+			{
+				_repository.SaveChanges();
+			}
+			catch (DbUpdateException e)
+			{
+				return BadRequest(new DbError(e.Message, e.InnerException.Message));
+			}
 			return NoContent();
 		}
 
@@ -78,7 +93,14 @@ namespace AnnuaireBloc4API.Controllers
 				return ValidationProblem(ModelState);
 			_mapper.Map(commandToPatch, site);
 			_repository.UpdateSite(site);
-			_repository.SaveChanges();
+			try
+			{
+				_repository.SaveChanges();
+			}
+			catch (DbUpdateException e)
+			{
+				return BadRequest(new DbError(e.Message, e.InnerException.Message));
+			}
 			return NoContent();
 		}
 
@@ -90,7 +112,14 @@ namespace AnnuaireBloc4API.Controllers
 			if (site == null)
 				return NotFound();
 			_repository.DeleteSite(site);
-			_repository.SaveChanges();
+			try
+			{
+				_repository.SaveChanges();
+			}
+			catch (DbUpdateException e)
+			{
+				return BadRequest(new DbError(e.Message, e.InnerException.Message));
+			}
 			return NoContent();
 		}
 	}

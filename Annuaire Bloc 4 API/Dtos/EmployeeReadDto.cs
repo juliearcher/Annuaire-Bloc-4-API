@@ -23,5 +23,8 @@ namespace AnnuaireBloc4API.Dtos
 
         public string Department { get; set; }
         public string Site { get; set; }
+
+        public long DepartmentsId { get; set; }
+        public long SitesId { get; set; }
     }
 }

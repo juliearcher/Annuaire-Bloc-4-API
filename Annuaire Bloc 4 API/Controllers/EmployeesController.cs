@@ -4,6 +4,7 @@ using AnnuaireBloc4API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,17 +28,7 @@ namespace AnnuaireBloc4API.Controllers
 		public ActionResult<IEnumerable<EmployeeReadDto>> GetAllEmployees()
 		{
 			var employeeList = _repository.GetAllEmployees();
-			var sitesList = _repository.GetAllSites();
-			var departmentsList = _repository.GetAllDepartments();
-			var employeeReadDtoList = _mapper.Map<IEnumerable<EmployeeReadDto>>(employeeList);
-			for (int i  = 0; i < employeeReadDtoList.Count() && i < employeeList.Count(); ++i)
-			{
-				var department = departmentsList.Where(p => p.Id == employeeList.ElementAt(i).DepartmentsId).First();
-				var site = sitesList.Where(p => p.Id == employeeList.ElementAt(i).SitesId).First();
-				employeeReadDtoList.ElementAt(i).Site = site.City;
-				employeeReadDtoList.ElementAt(i).Department = department.Name;
-			}
-			return Ok(employeeReadDtoList);
+			return Ok(employeeList);
 		}
 
 		// GET api/employees/{id}
@@ -47,12 +38,7 @@ namespace AnnuaireBloc4API.Controllers
 			var employee = _repository.GetEmployeeById(id);
 			if (employee == null)
 				return NotFound();
-			var department = _repository.GetDepartmentById((int)employee.DepartmentsId);
-			var site = _repository.GetSiteById((int)employee.SitesId);
-			var employeeReadDto = _mapper.Map<EmployeeReadDto>(employee);
-			employeeReadDto.Site = site.City;
-			employeeReadDto.Department = department.Name;
-			return Ok(employeeReadDto);
+			return Ok(employee);
 		}
 
 		//POST api/employees
@@ -62,7 +48,14 @@ namespace AnnuaireBloc4API.Controllers
 			// TODO check if infos are valid
 			var employeeModel = _mapper.Map<Employee>(employeeCreateDto);
 			_repository.CreateEmployee(employeeModel);
-			_repository.SaveChanges();
+			try
+			{
+				_repository.SaveChanges();
+			}
+			catch (DbUpdateException e)
+			{
+				return BadRequest(new DbError(e.Message, e.InnerException.Message));
+			}
 			var employeeReadDto = _mapper.Map<EmployeeReadDto>(employeeModel);
 
 			return CreatedAtRoute(nameof(GetEmployeeById), new { Id = employeeReadDto.Id }, employeeReadDto);
@@ -73,12 +66,19 @@ namespace AnnuaireBloc4API.Controllers
 		public ActionResult UpdateEmployee(int id, EmployeeUpdateDto employeeUpdateDto)
 		{
 			// TODO CHECK DUPLICATA OR EXCEPTION
-			var employee = _repository.GetEmployeeById(id);
+			var employee = _repository.GetEmployeeByIdFull(id);
 			if (employee == null)
 				return NotFound();
 			_mapper.Map(employeeUpdateDto, employee);
 			_repository.UpdateEmployee(employee);
-			_repository.SaveChanges();
+			try
+			{
+				_repository.SaveChanges();
+			}
+			catch (DbUpdateException e)
+			{
+				return BadRequest(new DbError(e.Message, e.InnerException.Message));
+			}
 			return NoContent();
 		}
 
@@ -87,7 +87,7 @@ namespace AnnuaireBloc4API.Controllers
 		public ActionResult PartialCommandUpdate(int id, JsonPatchDocument<EmployeeUpdateDto> patchDocument)
 		{
 			// TODO CHECK DUPLICATA OR EXCEPTION
-			var employee = _repository.GetEmployeeById(id);
+			var employee = _repository.GetEmployeeByIdFull(id);
 			if (employee == null)
 				return NotFound();
 			var commandToPatch = _mapper.Map<EmployeeUpdateDto>(employee);
@@ -96,7 +96,14 @@ namespace AnnuaireBloc4API.Controllers
 				return ValidationProblem(ModelState);
 			_mapper.Map(commandToPatch, employee);
 			_repository.UpdateEmployee(employee);
-			_repository.SaveChanges();
+			try
+			{
+				_repository.SaveChanges();
+			}
+			catch (DbUpdateException e)
+			{
+				return BadRequest(new DbError(e.Message, e.InnerException.Message));
+			}
 			return NoContent();
 		}
 
@@ -104,11 +111,18 @@ namespace AnnuaireBloc4API.Controllers
 		[HttpDelete("{id}")]
 		public ActionResult DeleteCommand(int id)
 		{
-			var employee = _repository.GetEmployeeById(id);
+			var employee = _repository.GetEmployeeByIdFull(id);
 			if (employee == null)
 				return NotFound();
 			_repository.DeleteEmployee(employee);
-			_repository.SaveChanges();
+			try
+			{
+				_repository.SaveChanges();
+			}
+			catch (DbUpdateException e)
+			{
+				return BadRequest(new DbError(e.Message, e.InnerException.Message));
+			}
 			return NoContent();
 		}
 	}

@@ -4,6 +4,8 @@ using AnnuaireBloc4API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace AnnuaireBloc4API.Controllers
@@ -44,7 +46,14 @@ namespace AnnuaireBloc4API.Controllers
 			// TODO check if infos are valid
 			var departmentModel = _mapper.Map<Department>(departmentCreateDto);
 			_repository.CreateDepartment(departmentModel);
-			_repository.SaveChanges();
+			try
+			{
+				_repository.SaveChanges();
+			}
+			catch(DbUpdateException e)
+			{
+				return BadRequest(new DbError(e.Message, e.InnerException.Message));
+			}
 			var departmentReadDto = _mapper.Map<DepartmentReadDto>(departmentModel);
 
 			return CreatedAtRoute(nameof(GetDepartmentById), new { Id = departmentReadDto.Id }, departmentReadDto);
@@ -60,7 +69,14 @@ namespace AnnuaireBloc4API.Controllers
 				return NotFound();
 			_mapper.Map(departmentUpdateDto, department);
 			_repository.UpdateDepartment(department);
-			_repository.SaveChanges();
+			try
+			{
+				_repository.SaveChanges();
+			}
+			catch (DbUpdateException e)
+			{
+				return BadRequest(new DbError(e.Message, e.InnerException.Message));
+			}
 			return NoContent();
 		}
 
@@ -78,7 +94,14 @@ namespace AnnuaireBloc4API.Controllers
 				return ValidationProblem(ModelState);
 			_mapper.Map(commandToPatch, department);
 			_repository.UpdateDepartment(department);
-			_repository.SaveChanges();
+			try
+			{
+				_repository.SaveChanges();
+			}
+			catch (DbUpdateException e)
+			{
+				return BadRequest(new DbError(e.Message, e.InnerException.Message));
+			}
 			return NoContent();
 		}
 
@@ -90,7 +113,14 @@ namespace AnnuaireBloc4API.Controllers
 			if (department == null)
 				return NotFound();
 			_repository.DeleteDepartment(department);
-			_repository.SaveChanges();
+			try
+			{
+				_repository.SaveChanges();
+			}
+			catch(DbUpdateException e)
+			{
+				return BadRequest(new DbError(e.Message, e.InnerException.Message));
+			}
 			return NoContent();
 		}
 	}

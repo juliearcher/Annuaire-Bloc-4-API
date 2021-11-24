@@ -1,3 +1,4 @@
+using AnnuaireBloc4API.Dtos;
 using AnnuaireBloc4API.Models;
 using System.Collections.Generic;
 
@@ -24,8 +25,9 @@ namespace AnnuaireBloc4API.Data
 		#endregion
 
 		#region Employees
-		IEnumerable<Employee> GetAllEmployees();
-		Employee GetEmployeeById(int id);
+		IEnumerable<EmployeeReadDto> GetAllEmployees();
+		EmployeeReadDto GetEmployeeById(int id);
+		Employee GetEmployeeByIdFull(int id);
 		void CreateEmployee(Employee employee);
 		void UpdateEmployee(Employee employee);
 		void DeleteEmployee(Employee employee);

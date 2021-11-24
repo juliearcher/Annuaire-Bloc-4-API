@@ -99,12 +99,52 @@ namespace AnnuaireBloc4API.Data
 			_context.Employees.Remove(employee);
 		}
 
-		public IEnumerable<Employee> GetAllEmployees()
+		public IEnumerable<EmployeeReadDto> GetAllEmployees()
 		{
-			return _context.Employees.ToList();
+			//return _context.Employees.ToList();
+			return _context.Employees.Join(_context.Departments,
+				employee => employee.DepartmentsId, department => department.Id,
+				(employee, department) => new { employee, department.Name })
+				.Join(_context.Sites, employee => employee.employee.SitesId, site => site.Id,
+				(employee, site) => new { employee, site.City })
+				.Select(r => new EmployeeReadDto {
+					Id = r.employee.employee.Id,
+					Department = r.employee.Name,
+					Mail = r.employee.employee.Mail,
+					Mobile = r.employee.employee.Mobile,
+					Name = r.employee.employee.Name,
+					Phone = r.employee.employee.Phone,
+					Site = r.City,
+					Surname = r.employee.employee.Surname,
+					DepartmentsId = r.employee.employee.DepartmentsId,
+					SitesId = r.employee.employee.SitesId
+				}).ToList();
 		}
 
-		public Employee GetEmployeeById(int id)
+		public EmployeeReadDto GetEmployeeById(int id)
+		{
+			return _context.Employees.Join(_context.Departments,
+				employee => employee.DepartmentsId, department => department.Id,
+				(employee, department) => new { employee, department.Name })
+				.Join(_context.Sites, employee => employee.employee.SitesId, site => site.Id,
+				(employee, site) => new { employee, site.City })
+				.Where(r => r.employee.employee.Id == id)
+				.Select(r => new EmployeeReadDto
+				{
+					Id = r.employee.employee.Id,
+					Department = r.employee.Name,
+					Mail = r.employee.employee.Mail,
+					Mobile = r.employee.employee.Mobile,
+					Name = r.employee.employee.Name,
+					Phone = r.employee.employee.Phone,
+					Site = r.City,
+					Surname = r.employee.employee.Surname,
+					DepartmentsId = r.employee.employee.DepartmentsId,
+					SitesId = r.employee.employee.SitesId
+				}).FirstOrDefault();
+		}
+
+		public Employee GetEmployeeByIdFull(int id)
 		{
 			return _context.Employees.FirstOrDefault(p => p.Id == id);
 		}
