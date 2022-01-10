@@ -5,7 +5,8 @@ namespace AnnuaireBloc4API
 	public class DbError
 	{
 		[JsonProperty("errors")]
-		public DbErrorMessage Errors { get; set; }
+		//public DbErrorMessage Errors { get; set; }
+		public string[] Errors = new string[1];
 
 		[JsonProperty("title")]
 		private string Title { get; set; }
@@ -28,7 +29,8 @@ namespace AnnuaireBloc4API
 		public DbError(string title, string errorMessage)
 		{
 			Title = title;
-			Errors = new DbErrorMessage(errorMessage);
+			//Errors = new DbErrorMessage(errorMessage);
+			Errors[0] = errorMessage;
 		}
 	}
 }
